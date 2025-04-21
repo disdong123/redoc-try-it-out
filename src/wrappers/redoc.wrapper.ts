@@ -45,7 +45,9 @@ export class RedocWrapper {
     await loadScript(RedocWrapper.cfg.bundleUrl);
     const promise = new Promise<void>((resolve, reject): void => {
       Redoc.init(
-        RedocWrapper.cfg.docUrl,
+        RedocWrapper.cfg.docUrl === undefined
+          ? RedocWrapper.cfg.spec
+          : RedocWrapper.cfg.docUrl,
         RedocWrapper.cfg,
         RedocWrapper.domElement,
         (e: Error) => (e ? reject(e) : resolve()),

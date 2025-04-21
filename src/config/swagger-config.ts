@@ -37,7 +37,7 @@ export class SwaggerConfig implements SwaggerOptions {
   public readonly showClass: string = "show";
   public readonly selectedOperationContainerClass: string = "opened-shadow";
 
-  public readonly version: string = "3.48.0";
+  public readonly version: string = "4.19.1";
 
   constructor(
     options: SwaggerOptions,

@@ -29,6 +29,7 @@ export class SwaggerConfig implements SwaggerOptions {
 
   public readonly dom_id: string = "#swagger-ui";
   public readonly url: string;
+  public readonly spec: object;
   public readonly tryItOutEnabled: boolean;
 
   public readonly authModalClass: string = "auth-modal";
@@ -38,13 +39,19 @@ export class SwaggerConfig implements SwaggerOptions {
 
   public readonly version: string = "3.48.0";
 
-  constructor(options: SwaggerOptions, url: string, tryItOutEnabled: boolean) {
+  constructor(
+    options: SwaggerOptions,
+    url: string,
+    spec: object,
+    tryItOutEnabled: boolean,
+  ) {
     Config.parseOptions(this, options);
     this.url = url;
+    this.spec = spec;
     this.tryItOutEnabled = tryItOutEnabled;
-    this.onCompletePromise = new Promise<void>(
-      (resolve) => (this._resolve = resolve),
-    );
+    this.onCompletePromise = new Promise<void>((resolve) => {
+      this._resolve = resolve;
+    });
   }
 
   public get id(): string {

@@ -24,15 +24,17 @@ export class RedocTryItOut {
 
   private static config(
     url: string,
+    spec: object,
     cfg: RedocTryItOutOptions,
     element?: HTMLElement,
   ): void {
-    RedocWrapper.cfg = new RedocTryItOutConfig(url, cfg, element);
+    RedocWrapper.cfg = new RedocTryItOutConfig(url, spec, cfg, element);
 
     if (RedocWrapper.cfg.tryItOutEnabled) {
       SwaggerWrapper.cfg = new SwaggerConfig(
-        cfg.swaggerOptions || {},
+        { ...cfg.swaggerOptions, ...spec } || {},
         url,
+        spec,
         true,
       );
       AuthBtn.cfg = new AuthBtnConfig(cfg.authBtn || {});
@@ -47,10 +49,11 @@ export class RedocTryItOut {
 
   public static async init(
     docUrl: string,
+    spec: object,
     cfg: RedocTryItOutOptions,
     element?: HTMLElement,
   ): Promise<void> {
-    RedocTryItOut.config(docUrl, cfg, element);
+    RedocTryItOut.config(docUrl, spec, cfg, element);
 
     if (RedocWrapper.cfg.tryItOutEnabled) {
       await RedocTryItOut.loadAll();

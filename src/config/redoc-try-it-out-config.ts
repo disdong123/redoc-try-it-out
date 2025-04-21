@@ -12,7 +12,8 @@ const DEFAULT_JQUERY_VERSION = "3.6.0";
 const DEFAULT_JQUERY_SCROLL_VERSION = "2.1.2";
 
 export class RedocTryItOutConfig implements RedocTryItOutOptions {
-  public readonly docUrl: string;
+  public readonly docUrl: string | undefined;
+  public readonly spec: object | undefined;
   public readonly element?: HTMLElement;
 
   private readonly _containerId: string = "redoc-container";
@@ -29,12 +30,14 @@ export class RedocTryItOutConfig implements RedocTryItOutOptions {
   };
 
   public constructor(
-    docUrl: string,
+    docUrl: string | undefined,
+    spec: object | undefined,
     options: RedocTryItOutOptions,
     element?: HTMLElement,
   ) {
     Config.parseOptions(this, options);
     this.docUrl = docUrl;
+    this.spec = spec;
     this.element = element;
   }
 

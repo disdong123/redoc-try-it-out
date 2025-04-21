@@ -2,6 +2,7 @@ export type CallbackFunction = () => void;
 
 export interface SwaggerOptions {
   url?: string;
+  spec?: object;
   dom_id?: string;
   version?: string;
   authorizeBtnSelector?: string;

@@ -5,9 +5,9 @@ import { SwaggerConfig } from "../src/config/swagger-config";
 describe("StyleMatcherConfig", () => {
   test("test that config can be overridden", () => {
     // dummy initialization
-    const swaggerConfig = new SwaggerConfig({}, "http://vg.no", true);
+    const swaggerConfig = new SwaggerConfig({}, "http://vg.no", {}, true);
     // dummy initialization
-    const redocTryItOutConfig = new RedocTryItOutConfig("http://vg.no", {});
+    const redocTryItOutConfig = new RedocTryItOutConfig("http://vg.no", {}, {});
 
     const config = new StyleMatcherConfig(
       {

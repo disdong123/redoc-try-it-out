@@ -1,15 +1,34 @@
 <html>
-    <head>
-        <script type="text/javascript" src="./try-it-out.min.js"></script>
-    </head>
-    <body>
-        <div id="redoc_container"></div>
-        <script>
-            RedocTryItOut.init(
-                "https://petstore.swagger.io/v2/swagger.json",
-                { title: "Pet Store" },
-                document.getElementById("redoc_container"),
-            );
-        </script>
-    </body>
+<head>
+  <script type="text/javascript" src="./try-it-out.min.js"></script>.
+</head>
+<body>
+<div id="redoc_container"></div>
+<script>
+  RedocTryItOut.init(
+    "https://petstore3.swagger.io/api/v3/openapi.json",
+    {
+      redocVersion: "2.1.4",
+      // Specify the place where you have stored the dependencies this library pulls down
+      //cdnUrl: "https://cdn.redoc.ly", // <- will fail with 404 because this cdn doesnt have jquery :)
+      //cdnUrl: "./test", // <- will also fail with 4094
+      // cdnUrl: "/",
+      theme: {
+        spacing: {
+          unit: 4,
+          sectionHorizontal: 100,
+          sectionVertical: 100,
+        }
+      },
+      disableSearch: true,
+      hideLoading: true,
+      untrustedDefinition: true,
+      sortOperationsAlphabetically: false,
+      scrollYOffset: 100,
+      pathInMiddlePanel: true
+    },
+    document.getElementById("redoc_container"),
+  );
+</script>
+</body>
 </html>

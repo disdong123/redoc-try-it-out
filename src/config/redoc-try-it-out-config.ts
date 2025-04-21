@@ -77,6 +77,8 @@ export class RedocTryItOutConfig implements RedocTryItOutOptions {
     jqueryScrollToUrl: string;
   } {
     return {
+      // https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js
+      // https://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js
       jqueryUrl: `${Config.cdnUrl}/jquery@${this.dependenciesVersions.jquery}/dist/jquery.min.js`,
       jqueryScrollToUrl: `${Config.cdnUrl}/jquery.scrollto@${this.dependenciesVersions.jqueryScrollTo}/jquery.scrollTo.min.js`,
     };

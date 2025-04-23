@@ -1,7 +1,4 @@
-import {
-  RedocTryItOutOptions,
-  DependenciesVersions,
-} from "../interfaces/redoc-try-it-out-options.interface";
+import { RedocTryItOutOptions } from "../interfaces/redoc-try-it-out-options.interface";
 import { Config } from "./config";
 import { InvalidElementError } from "../errors/invalid-element.error";
 
@@ -11,23 +8,12 @@ const DEFAULT_REDOC_VERSION = "2.0.0-rc.56";
 const DEFAULT_JQUERY_VERSION = "3.6.0";
 const DEFAULT_JQUERY_SCROLL_VERSION = "2.1.2";
 
-export class RedocTryItOutConfig implements RedocTryItOutOptions {
+export class RedocTryItOutConfig {
   public readonly docUrl: string | undefined;
   public readonly spec: object | undefined;
   public readonly element?: HTMLElement;
 
-  private readonly _containerId: string = "redoc-container";
-  private readonly _operationBoxSelector: string = "[data-section-id]";
-
-  public readonly tryItOutEnabled: boolean = true;
-  public readonly tryItBoxContainerId: string = "try-out-wrapper";
-  public readonly redocVersion: string = DEFAULT_REDOC_VERSION;
-  public readonly selectedOperationClass: string = "try";
-
-  public readonly dependenciesVersions: DependenciesVersions = {
-    jquery: DEFAULT_JQUERY_VERSION,
-    jqueryScrollTo: DEFAULT_JQUERY_SCROLL_VERSION,
-  };
+  public readonly options: RedocTryItOutOptions;
 
   public constructor(
     docUrl: string | undefined,
@@ -35,7 +21,24 @@ export class RedocTryItOutConfig implements RedocTryItOutOptions {
     options: RedocTryItOutOptions,
     element?: HTMLElement,
   ) {
-    Config.parseOptions(this, options);
+    this.options = {
+      tryItOutEnabled: true,
+      tryItBoxContainerId: "try-out-wrapper",
+      redocVersion: DEFAULT_REDOC_VERSION,
+      selectedOperationClass: "try",
+      disableZenscroll: true,
+      dependenciesVersions: {
+        ...{
+          jquery: DEFAULT_JQUERY_VERSION,
+          jqueryScrollTo: DEFAULT_JQUERY_SCROLL_VERSION,
+        },
+        ...options.dependenciesVersions,
+      },
+      containerId: "redoc-container",
+      operationBoxSelector: "[data-section-id]",
+      cdnUrl: Config.cdnUrl,
+      ...options,
+    };
     this.docUrl = docUrl;
     this.spec = spec;
     this.element = element;
@@ -52,27 +55,27 @@ export class RedocTryItOutConfig implements RedocTryItOutOptions {
   }
 
   public get tryItBoxSelector(): string {
-    return `#${this.tryItBoxContainerId}`;
+    return `#${this.options.tryItBoxContainerId}`;
   }
 
   public get version(): string {
-    return this.redocVersion;
+    return this.options.redocVersion || "";
   }
 
   public get containerId(): string {
-    return this.element ? this.elementId : this._containerId;
+    return this.element ? this.elementId : this.options.containerId || "";
   }
 
   public get containerSelector(): string {
-    return `#${this.containerId}`;
+    return `#${this.options.containerId}`;
   }
 
   public get operationBoxSelector(): string {
-    return `${this.containerSelector} ${this._operationBoxSelector}`;
+    return `${this.containerSelector} ${this.options.operationBoxSelector}`;
   }
 
   public get bundleUrl(): string {
-    return `${Config.cdnUrl}/redoc@${this.version}/bundles/redoc.standalone.min.js`;
+    return `${this.options.cdnUrl}/redoc@${this.version}/bundles/redoc.standalone.min.js`;
   }
 
   public get tryItDependencies(): {
@@ -82,8 +85,8 @@ export class RedocTryItOutConfig implements RedocTryItOutOptions {
     return {
       // https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js
       // https://cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js
-      jqueryUrl: `${Config.cdnUrl}/jquery@${this.dependenciesVersions.jquery}/dist/jquery.min.js`,
-      jqueryScrollToUrl: `${Config.cdnUrl}/jquery.scrollto@${this.dependenciesVersions.jqueryScrollTo}/jquery.scrollTo.min.js`,
+      jqueryUrl: `${this.options.cdnUrl}/jquery@${this.options.dependenciesVersions?.jquery || ""}/dist/jquery.min.js`,
+      jqueryScrollToUrl: `${this.options.cdnUrl}/jquery.scrollto@${this.options.dependenciesVersions?.jqueryScrollTo || ""}/jquery.scrollTo.min.js`,
     };
   }
 }

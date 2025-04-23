@@ -30,9 +30,13 @@ export class RedocTryItOut {
   ): void {
     RedocWrapper.cfg = new RedocTryItOutConfig(url, spec, cfg, element);
 
-    if (RedocWrapper.cfg.tryItOutEnabled) {
+    if (RedocWrapper.cfg.options.tryItOutEnabled) {
       SwaggerWrapper.cfg = new SwaggerConfig(
-        { ...cfg.swaggerOptions, ...spec } || {},
+        {
+          cdnUrl: RedocWrapper.cfg.options.cdnUrl,
+          ...spec,
+          ...(cfg.swaggerOptions || {}),
+        },
         url,
         spec,
         true,
@@ -55,7 +59,7 @@ export class RedocTryItOut {
   ): Promise<void> {
     RedocTryItOut.config(docUrl, spec, cfg, element);
 
-    if (RedocWrapper.cfg.tryItOutEnabled) {
+    if (RedocWrapper.cfg.options.tryItOutEnabled) {
       await RedocTryItOut.loadAll();
       AuthBtn.init();
       TryBtn.init();

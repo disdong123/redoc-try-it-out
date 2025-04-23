@@ -233,4 +233,6 @@ export interface RedocTryItOutOptions extends RedocOptions {
   tryBtn?: TryBtnOptions;
   swaggerOptions?: SwaggerOptions;
   stylerMatcher?: StyleMatcherOptions;
+  disableZenscroll?: boolean;
+  cdnUrl?: string;
 }

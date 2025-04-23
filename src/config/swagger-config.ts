@@ -39,6 +39,7 @@ export class SwaggerConfig implements SwaggerOptions {
 
   public readonly version: string = "4.19.1";
   public readonly cdnUrl: string = Config.cdnUrl;
+  public readonly requestInterceptor?: CallbackFunction = () => {};
 
   constructor(
     options: SwaggerOptions,
@@ -49,6 +50,7 @@ export class SwaggerConfig implements SwaggerOptions {
     Config.parseOptions(this, options);
     this.url = url;
     this.spec = spec;
+    this.requestInterceptor = options.requestInterceptor;
     this.tryItOutEnabled = tryItOutEnabled;
     this.onCompletePromise = new Promise<void>((resolve) => {
       this._resolve = resolve;

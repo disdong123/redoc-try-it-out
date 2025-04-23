@@ -19,4 +19,5 @@ export interface SwaggerOptions {
   wrapperSelector?: string;
   onComplete?: CallbackFunction;
   cdnUrl?: string;
+  requestInterceptor?: CallbackFunction;
 }

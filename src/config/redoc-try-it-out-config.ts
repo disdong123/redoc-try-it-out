@@ -37,6 +37,7 @@ export class RedocTryItOutConfig {
       containerId: "redoc-container",
       operationBoxSelector: "[data-section-id]",
       cdnUrl: Config.cdnUrl,
+      sortOperationsAlphabetically: true,
       ...options,
     };
     this.docUrl = docUrl;

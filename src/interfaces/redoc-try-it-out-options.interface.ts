@@ -83,6 +83,10 @@ export interface RedocOptions {
    * Disabled by default for performance reasons. Enable this option if you work with untrusted user data!
    **/
   untrustedSpec?: boolean;
+  /**
+   * When set to true, sorts operations in the navigation sidebar and in the middle panel alphabetically.˙
+   */
+  sortOperationsAlphabetically?: boolean;
 }
 
 export interface ThemOptions {
